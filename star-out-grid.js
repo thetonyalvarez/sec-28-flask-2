@@ -15,9 +15,8 @@ function findStarCoordinates(grid, star) {
 }
 
 function starOutGrid(grid, star = "*") {
-	let star_locs = findStarCoordinates(grid, star);
-
-	for (let star_loc of star_locs) {
+	// search and replace values with stars in same row and column
+	function searchAndReplace(star_loc) {
 		for (let [row_id, row] of grid.entries()) {
 			if (row_id == star_loc[0]) {
 				row.forEach((col, index) => {
@@ -26,6 +25,14 @@ function starOutGrid(grid, star = "*") {
 			}
 			row[star_loc[1]] = "*";
 		}
+	}
+
+	// create an array of all star location coordinates
+	let star_locs = findStarCoordinates(grid, star);
+
+	// for each coordinate point in array, run the search-and-replace function
+	for (let star_loc of star_locs) {
+		searchAndReplace(star_loc);
 	}
 
 	return grid;
